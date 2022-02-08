@@ -21,7 +21,7 @@ from nest_values import *
 from funciones   import *
 
 image_selected = sys.argv[1] 
-#Lambda = sys.argv[2] 
+max_rescaling_factor_gabor = sys.argv[2] 
 
 with open('seed.txt') as f:
     seed = lines = int(f.readlines()[0])
