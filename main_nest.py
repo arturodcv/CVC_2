@@ -29,7 +29,7 @@ num_images_to_simulate = len(images_to_simulate)
 #ms_per_stimuli = 700.0
 #simulation_time = ms_per_stimuli * num_images_to_simulate 
 
-max_rescaling_factor_gabor = sys.argv[1]
+
 ########################################################### Nest ###################################################################
 
 nest.ResetKernel()
