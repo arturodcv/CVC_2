@@ -86,7 +86,7 @@ syn_model_inh = 'static_synapse_hpc'
 syn_model_exc = 'static_synapse_hpc' 
 
 #Delays
-delay_exc = 0.3 ; delay_exc_large = 1.0 ; delay_inh = 0.5
+delay_exc = 1.0 ; delay_exc_large = 1.0 ; delay_inh = 0.5
 slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.5
 
 
@@ -101,11 +101,11 @@ rescale = 2.0 ; radius_lat = 2.5
 ratio_inh_exc_w = 4.0
 p_center_inh_exc = 1.0 ;        weight_inh_exc = - ratio_inh_exc_w * 0.1
 p_center_inh_inh = 1.0 ;        weight_inh_inh = - ratio_inh_exc_w * 0.1
-p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.6
-p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.6
+p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.4
+p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.4
 
 input_weight_poiss_exc = 1.0     
-input_weight_poiss_inh = 0.25
+input_weight_poiss_inh = 0.1
                
 dict_poiss_to_v1_exc  = {'connection_type': 'divergent','weights': input_weight_poiss_exc ,
                          'mask': {'grid': {'rows': 1, 'columns': 1}}, 
