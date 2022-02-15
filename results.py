@@ -34,7 +34,7 @@ path = results_path + '/data_total'; create_folder(path) ; remove_contents(path)
 data = read_and_fix_dataframe('','total')
 times,complementary_time_list = get_times(data)
 total_eeg = get_eeg(times, complementary_time_list, 'total', '_', path)
-freqs_tot, peaks_tot, idx_tot = get_frequencies(total_eeg,'total','_', path)
+#freqs_tot, peaks_tot, idx_tot = get_frequencies(total_eeg,'total','_', path)
 total_eeg = np.sum(total_eeg)
 
 print("\n\nResults for inhibitory data: ")
@@ -44,7 +44,7 @@ data = read_and_fix_dataframe('','inh')
 times,complementary_time_list = get_times(data)
 inh_eeg = get_eeg(times, complementary_time_list, 'inh', '_', path)
 print('inhibitory spikes: ',np.sum(inh_eeg[200:]))
-freqs, peaks, idx = get_frequencies(inh_eeg,'inh','_', path)
+#freqs, peaks, idx = get_frequencies(inh_eeg,'inh','_', path)
 
 
 
@@ -56,7 +56,7 @@ data = read_and_fix_dataframe('','exc')
 times,complementary_time_list = get_times(data)
 exc_eeg = get_eeg(times, complementary_time_list, 'exc', '_', path)
 print('excitatory spikes: ',np.sum(exc_eeg[200:]))
-freqs_exc, peaks_exc, idx_exc = get_frequencies(exc_eeg,'exc','_', path)
+#freqs_exc, peaks_exc, idx_exc = get_frequencies(exc_eeg,'exc','_', path)
 
 
 
