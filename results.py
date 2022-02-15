@@ -61,7 +61,7 @@ freqs_exc, peaks_exc, idx_exc = get_frequencies(exc_eeg,'exc','_', path)
 
 
 #collect_data(image_selected, exc_eeg, inh_eeg, peaks,freqs,idx, seed, Lambda)
-collect_data(image_selected, exc_eeg, inh_eeg, peaks_exc,freqs_exc,idx_exc,peaks_tot,freqs_tot,idx_tot, seed)
+#collect_data(image_selected, exc_eeg, inh_eeg, peaks_exc,freqs_exc,idx_exc,peaks_tot,freqs_tot,idx_tot, seed)
 
 #################### results for orientations
 
