@@ -125,8 +125,8 @@ def get_image_with_frequencies(image_name,orientation_in_radians, max_freq):
     fp = csf(freqs)    
     normalized_fp = fp/np.sum(fp)
     fd = [np.sum(normalized_fp[:i]) for i in range(len(normalized_fp))] 
-    samples = get_numbers_from_distribution(fd,freqs,cortex_size)
-    #samples = np.random.randint(1,max_freq+1,cortex_size)
+    #samples = get_numbers_from_distribution(fd,freqs,cortex_size)
+    samples = np.random.randint(1,max_freq+1,cortex_size)
     
     images = []
     for i in tqdm(range(len(freqs))):
