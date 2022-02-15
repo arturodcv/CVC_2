@@ -6,7 +6,7 @@ results_path = 'results_folder'
 positions_path = 'positions_folder'
 input_images_path = 'input_images_folder' 
 gabor_folder = 'gabor_outputs'
-collect_data_folder = 'results_collect_data_unif'
+collect_data_folder = 'results_collect_data_47'
 
 
 #Simulation 
@@ -27,8 +27,7 @@ y_cortex_size = num_hipercolumns * columns_in_hipercolumns
 cortex_size = x_cortex_size * y_cortex_size
 
 #Gabor
-K_size = 900 ;Psi = 0 ; Gamma = 0.7 ; sigma_to_lambda = 0.36 #Lambda = 50 ; Sigma = Lambda * 0.36
-max_freq = 30
+K_size = 900 ;Psi = 0 ; Gamma = 0.7 ; Lambda = 50 ; Sigma = Lambda * 0.36
 cut_pixels = 0
 get_output_gabors = 0
 max_rescaling_factor_gabor = 70
@@ -87,8 +86,8 @@ syn_model_inh = 'static_synapse_hpc'
 syn_model_exc = 'static_synapse_hpc' 
 
 #Delays
-delay_exc = 1.0 ; delay_exc_large = 1.0 ; delay_inh = 0.5
-slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.05
+delay_exc = 0.3 ; delay_exc_large = 1.0 ; delay_inh = 0.5
+slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.5
 
 
 # Large lateral connections
@@ -100,10 +99,10 @@ rescale = 2.0 ; radius_lat = 2.5
 
 # Short lateral connections
 ratio_inh_exc_w = 4.0
-p_center_inh_exc = 1.0 ;        weight_inh_exc = - ratio_inh_exc_w * 0.2
-p_center_inh_inh = 1.0 ;        weight_inh_inh = - ratio_inh_exc_w * 0.2
-p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.5
-p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.5
+p_center_inh_exc = 1.0 ;        weight_inh_exc = - ratio_inh_exc_w * 0.1
+p_center_inh_inh = 1.0 ;        weight_inh_inh = - ratio_inh_exc_w * 0.1
+p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.4
+p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.4
 
 input_weight_poiss_exc = 1.0     
 input_weight_poiss_inh = 0.25
@@ -174,7 +173,7 @@ image_from = int(ms_steady_state_simulation) + 100
 eeg_freqs_from = int(ms_steady_state_simulation) + 200
 eeg_freqs_until = eeg_freqs_from + 500
 radius = 2.5
-make_image_video = 1
+make_image_video = 0
 collect_data_bool = 0
 
 
