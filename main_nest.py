@@ -23,12 +23,9 @@ import sys
 from nest_values import *
 from funciones   import *
 
-image_selected = sys.argv[1] #'/sinusoid_12.png'
+image_selected = sys.argv[1]
 images_to_simulate = [input_images_path + image_selected ]  
 num_images_to_simulate = len(images_to_simulate)
-#ms_per_stimuli = 700.0
-#simulation_time = ms_per_stimuli * num_images_to_simulate 
-
 
 ########################################################### Nest ###################################################################
 

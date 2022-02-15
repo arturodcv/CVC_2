@@ -20,8 +20,6 @@ import sys
 
 from nest_values import *
 
-#Lambda = int(sys.argv[3]); Sigma = Lambda * 0.36
-#max_rescaling_factor_gabor =  int(sys.argv[4])
 #################################################### Folders ################################################################
 
 def create_folder(path_name):
@@ -52,15 +50,15 @@ def gabor_filter(K_size,Lambda, Theta, Sigma, Gamma, Psi):
 
 def apply_filter(gray_img, K_size, Lambda, Theta, Sigma, Gamma, Psi):
     gray = np.pad(gray_img, (K_size//2, K_size//2), 'edge')
-    gabor = gabor_filter(K_size = K_size, Lambda = Lambda, Theta = Theta, Sigma = Sigma, Gamma = Gamma, Psi = Psi)
+    gabor = gabor_filter(K_size = K_size, Lambda = Lambda, Theta = Theta, Sigma = Lambda * sigma_to_lambda, Gamma = Gamma, Psi = Psi)
     gabor[gabor < 0.0] = (gabor[gabor < 0.0])* 1.27679  
     output = fftconvolve(gray,gabor, mode = "valid")
     return output
 
-def gabor(gray_img,orientation_in_radians):
+def gabor(gray_img,orientation_in_radians, Lambda):
     output = np.zeros((gray_img.shape[0],gray_img.shape[1]), dtype=np.float32) 
     orientation_ = orientation_in_radians*math.pi/180
-    output = apply_filter(gray_img, K_size=K_size, Lambda=Lambda, Theta=orientation_, Sigma=Sigma, Gamma=Gamma,Psi = Psi )
+    output = apply_filter(gray_img, K_size=K_size, Lambda=Lambda, Theta=orientation_, Sigma=Lambda * sigma_to_lambda, Gamma=Gamma,Psi = Psi )
     output = np.clip(output, 0, max(0,np.max(output)))
     return output
 
@@ -70,11 +68,12 @@ def input_treatment(input_spike,x_cortex_size,y_cortex_size,orientation):
     input_as_img = Image.fromarray(input_spike)
     input_resized = np.asarray(input_as_img.resize((x_cortex_size,y_cortex_size), resample = Image.NEAREST  ))
     input_transposed = input_resized.transpose()
-    input_as_list = input_transposed.tolist()
-    flat_list = [item for sublist in input_as_list for item in sublist]
-    return flat_list
+    #input_as_list = input_transposed.tolist()
+    #flat_list = [item for sublist in input_as_list for item in sublist]
+    #return flat_list
+    return input_transposed
     
-def main_img(img,orientation, max_to_rescale):
+def main_img(img,orientation, max_to_rescale, freq):
     img = cv2.imread(img)
     if correct_gamma == True: 
         img_in_0_1 = np.multiply(img,1/255)
@@ -83,29 +82,64 @@ def main_img(img,orientation, max_to_rescale):
         format_img = np.uint8(img_in_0_255)
         img = format_img
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
-    output_gabor = gabor(gray_img,orientation)
+    output_gabor = gabor(gray_img,orientation, freq)
     
     output_gabor = np.multiply(output_gabor,1/(max_to_rescale/max_rescaling_factor_gabor))
     
     if cut_pixels != 0:
         output_gabor = output_gabor[cut_pixels:-cut_pixels,cut_pixels:-cut_pixels]
-        
-    flat_list = input_treatment(output_gabor,x_cortex_size,y_cortex_size,orientation)
+    
+    treated_image = input_treatment(output_gabor,x_cortex_size,y_cortex_size,orientation)
+    #flat_list = input_treatment(output_gabor,x_cortex_size,y_cortex_size,orientation)
 
-    return flat_list
+    return treated_image
     
 def full_img_filtering(images_to_simulate,num_orientations):
     gabors_dict = {}
-    max_gabor = (gabor_filter(K_size = K_size, Lambda = Lambda, Theta = 90 * math.pi/ 180, Sigma = Sigma, Gamma = 0.00001, Psi = Psi) + 1) * 255 / 2
-    max_gabor = np.max(gabor(max_gabor,90))
 
     for i in range(0,len(images_to_simulate)):
         image_dict = {}
         for j in range(0,num_orientations): 
-            orientation = j*180/num_orientations
-            image_dict["orientation_"+str(orientation)] = main_img(images_to_simulate[i],orientation,max_gabor)
+            orientation = j*180/num_orientations # orientation in radians
+            #max_gabor = (gabor_filter(K_size = K_size, Lambda = Lambda, Theta = orientation * math.pi/ 180, Sigma = Sigma, Gamma = 0.00001, Psi = Psi) + 1) * 255 / 2
+            #max_gabor = np.max(gabor(max_gabor,orientation))
+            image_dict["orientation_"+str(orientation)] = get_image_with_frequencies(images_to_simulate[i],orientation, num_freqs)
         gabors_dict["image_"+str(i)] = image_dict
     return gabors_dict
+
+def csf(x):  # constrast sensitivity function
+    return 2.6*(0.0192 + 0.114*x)*np.exp(-(0.114*x)**1.1)
+
+def get_samples_from_distribution(fd,num_samples):
+    samples = []
+    for i in range(num_samples):
+        rnd = np.random.random()
+        value_in_fd = min(fd, key=lambda x:abs(x-rnd))
+        index_in_fd = fd.index(value_in_fd)
+        samples.append(index_in_fd)
+    return samples
+
+def get_image_with_frequencies(image_name,orientation_in_radians, num_freqs):
+    prob_function = [csf(i) for i in range(0,num_freqs)]    
+    normalized_pf = [prob_function[i]/np.sum(prob_function) for i in range(len(prob_function))] 
+    density_function = [np.sum(normalized_pf[:i]) for i in range(len(normalized_pf))] 
+    samples = get_samples_from_distribution(density_function,cortex_size)
+    images = []
+    for i in range(1,num_freqs+1):
+        freq = 100/i
+        Lambda = freq; Sigma = Lambda * sigma_to_lambda
+        max_gabor = (gabor_filter(K_size = K_size, Lambda = freq, Theta = orientation_in_radians * math.pi/180, Sigma = Sigma, Gamma = 0.00001, Psi = Psi) + 1) * 255 / 2
+        max_gabor = np.max(gabor(max_gabor,orientation_in_radians, freq))
+        filtered_img = main_img(image_name,orientation_in_radians,max_gabor, freq)
+        images.append(filtered_img)
+
+    mixed_image = np.zeros([x_cortex_size,y_cortex_size])
+    for i in range(x_cortex_size):
+        for j in range(y_cortex_size):
+            mixed_image[i][j] = images[samples[i*x_cortex_size + j]][i][j]
+    input_as_list = mixed_image.tolist()
+    flat_list = [item for sublist in input_as_list for item in sublist]
+    return flat_list
 
 def save_gabors(gabors_to_nest, images_to_simulate,num_orientations):
     for i in range(0,len(images_to_simulate)):
@@ -346,7 +380,7 @@ def get_frequencies(eeg,orientation_to_read,exc_or_inh, path):
     plt.close('all')
     return density, peaks, idx
     
-def collect_data(image_selected, exc_eeg, inh_eeg, peaks_exc, freqs_exc, idx_exc,peaks_tot,freqs_tot,idx_tot, seed):
+def collect_data(image_selected, exc_eeg, inh_eeg, peaks_exc, freqs_exc,idx_exc,peaks_tot,freqs_tot, idx_tot, seed):
     dictionary = {'image_name': image_selected, 'exc_activity': np.sum(exc_eeg), 'inh_activity': np.sum(inh_eeg), 
                   'exc_spikes_from': np.sum(exc_eeg[200:]), 'inh_spikes_from': np.sum(inh_eeg[200:]),
                   'node_exc': peaks_exc[idx_exc][0], 'gamma_power_exc': np.around(sum(freqs_exc[broadband_initial:broadband_end_1]),2) ,
