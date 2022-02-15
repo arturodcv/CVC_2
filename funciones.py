@@ -103,30 +103,34 @@ def full_img_filtering(images_to_simulate,num_orientations):
             orientation = j*180/num_orientations # orientation in radians
             #max_gabor = (gabor_filter(K_size = K_size, Lambda = Lambda, Theta = orientation * math.pi/ 180, Sigma = Sigma, Gamma = 0.00001, Psi = Psi) + 1) * 255 / 2
             #max_gabor = np.max(gabor(max_gabor,orientation))
-            image_dict["orientation_"+str(orientation)] = get_image_with_frequencies(images_to_simulate[i],orientation, num_freqs)
+            image_dict["orientation_"+str(orientation)] = get_image_with_frequencies(images_to_simulate[i],orientation, max_freq)
         gabors_dict["image_"+str(i)] = image_dict
     return gabors_dict
 
-def csf(x):  # constrast sensitivity function
-    return 2.6*(0.0192 + 0.114*x)*np.exp(-(0.114*x)**1.1)
+def csf(x):
+    return x*np.exp(-0.2*x**1.1)
 
-def get_samples_from_distribution(fd,num_samples):
-    samples = []
-    for i in range(num_samples):
+def get_samples_from_distribution(fd,freqs,num_tests):
+    muestras = []
+    for i in range(num_tests):
         rnd = np.random.random()
         value_in_fd = min(fd, key=lambda x:abs(x-rnd))
         index_in_fd = fd.index(value_in_fd)
-        samples.append(index_in_fd)
-    return samples
+        muestras.append(freqs[index_in_fd])
+    return muestras
 
-def get_image_with_frequencies(image_name,orientation_in_radians, num_freqs):
-    prob_function = [csf(i) for i in range(0,num_freqs)]    
-    normalized_pf = [prob_function[i]/np.sum(prob_function) for i in range(len(prob_function))] 
-    density_function = [np.sum(normalized_pf[:i]) for i in range(len(normalized_pf))] 
-    samples = get_samples_from_distribution(density_function,cortex_size)
+def get_image_with_frequencies(image_name,orientation_in_radians, max_freq):
+
+    freqs = np.arange(1,max_freq+1,1)
+    fp = csf(freqs)    
+    normalized_fp = fp/np.sum(fp)
+    fd = [np.sum(normalized_fp[:i]) for i in range(len(normalized_fp))] 
+    samples = get_numbers_from_distribution(fd,freqs,cortex_size)
+    #samples = np.random.randint(1,max_freq+1,cortex_size)
+    
     images = []
-    for i in range(1,num_freqs+1):
-        freq = 100/i
+    for i in tqdm(range(len(freqs))):
+        freq = 100/freqs[i]
         Lambda = freq; Sigma = Lambda * sigma_to_lambda
         max_gabor = (gabor_filter(K_size = K_size, Lambda = freq, Theta = orientation_in_radians * math.pi/180, Sigma = Sigma, Gamma = 0.00001, Psi = Psi) + 1) * 255 / 2
         max_gabor = np.max(gabor(max_gabor,orientation_in_radians, freq))
@@ -136,7 +140,7 @@ def get_image_with_frequencies(image_name,orientation_in_radians, num_freqs):
     mixed_image = np.zeros([x_cortex_size,y_cortex_size])
     for i in range(x_cortex_size):
         for j in range(y_cortex_size):
-            mixed_image[i][j] = images[samples[i*x_cortex_size + j]][i][j]
+            mixed_image[i][j] = images[samples[i*x_cortex_size + j]-1][i][j]
     input_as_list = mixed_image.tolist()
     flat_list = [item for sublist in input_as_list for item in sublist]
     return flat_list
