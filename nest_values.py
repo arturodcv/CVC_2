@@ -6,7 +6,7 @@ results_path = 'results_folder'
 positions_path = 'positions_folder'
 input_images_path = 'input_images_folder' 
 gabor_folder = 'gabor_outputs'
-collect_data_folder = 'results_collect_data_48'
+collect_data_folder = 'results_collect_data_50'
 
 
 #Simulation 
@@ -86,7 +86,7 @@ syn_model_inh = 'static_synapse_hpc'
 syn_model_exc = 'static_synapse_hpc' 
 
 #Delays
-delay_exc = 0.3 ; delay_exc_large = 1.0 ; delay_inh = 0.5
+delay_exc = 0.3 ; delay_exc_large = 1.0 ; delay_inh = 0.75
 slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.5
 
 
