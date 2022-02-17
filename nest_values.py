@@ -86,7 +86,7 @@ syn_model_inh = 'static_synapse_hpc'
 syn_model_exc = 'static_synapse_hpc' 
 
 #Delays
-delay_exc = 1 ; delay_exc_large = 2.5 ; delay_inh = 2.0
+delay_exc = 1.0 ; delay_exc_large = 2.5 ; delay_inh = 2.0
 slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.5
 
 
