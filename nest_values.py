@@ -95,7 +95,7 @@ kappa_j = 0.126 * 1.5
 kappa_w = 0.14 * 2.5
 weight_large_range_exc_exc = 0.004
 weight_large_range_exc_inh = 0.025
-rescale = 2.0 ; radius_lat = 3.0#2.5
+rescale = 2.0 ; radius_lat = 3.5#2.5
 
 # Short lateral connections
 ratio_inh_exc_w = 4.0
