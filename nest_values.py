@@ -6,7 +6,7 @@ results_path = 'results_folder'
 positions_path = 'positions_folder'
 input_images_path = 'input_images_folder' 
 gabor_folder = 'gabor_outputs'
-collect_data_folder = 'results_collect_data_52'
+collect_data_folder = 'results_collect_data_53'
 
 
 #Simulation 
@@ -94,14 +94,14 @@ slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.5
 kappa_j = 0.126 * 1.5
 kappa_w = 0.14 * 2.5
 weight_large_range_exc_exc = 0.004
-weight_large_range_exc_inh = 0.022
+weight_large_range_exc_inh = 0.025
 rescale = 2.0 ; radius_lat = 3.0#2.5
 
 # Short lateral connections
 ratio_inh_exc_w = 4.0
 p_center_inh_exc = 1.0 ;        weight_inh_exc = - ratio_inh_exc_w * 0.2
 p_center_inh_inh = 1.0 ;        weight_inh_inh = - ratio_inh_exc_w * 0.2
-p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.4
+p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.5
 p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.4
 
 input_weight_poiss_exc = 1.0     
