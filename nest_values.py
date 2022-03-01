@@ -6,18 +6,15 @@ results_path = 'results_folder'
 positions_path = 'positions_folder'
 input_images_path = 'input_images_folder' 
 gabor_folder = 'gabor_outputs'
-collect_data_folder = 'results_collect_data_72'
+collect_data_folder = 'results_collect_data_test'
 
 
 #Simulation 
-#image_selected = '/sinusoid_12.png'
-#images_to_simulate = [input_images_path + image_selected ] 
-#num_images_to_simulate = len(images_to_simulate)
-ms_per_stimuli = 700.0
+ms_per_stimuli = 1000.0 ##  700.0 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ######### !!!!!!!! %%%%%%%%%%%%%%%%%%%%%%%
 simulation_time = ms_per_stimuli * 1 #num_images_to_simulate 
 ms_steady_state_simulation = 0.0
 
-lateral_connections = True
+lateral_connections = False # True
 
 #Size
 num_hipercolumns = 9
