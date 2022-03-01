@@ -102,7 +102,7 @@ p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.3
 p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.3
 
 input_weight_poiss_exc = 1.0     
-input_weight_poiss_inh = 0.1
+input_weight_poiss_inh = 0.5
                
 dict_poiss_to_v1_exc  = {'connection_type': 'divergent','weights': input_weight_poiss_exc ,
                          'mask': {'grid': {'rows': 1, 'columns': 1}}, 
