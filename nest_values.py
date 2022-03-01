@@ -6,15 +6,15 @@ results_path = 'results_folder'
 positions_path = 'positions_folder'
 input_images_path = 'input_images_folder' 
 gabor_folder = 'gabor_outputs'
-collect_data_folder = 'results_collect_data_test'
+collect_data_folder = 'results_collect_data_74'
 
 
 #Simulation 
-ms_per_stimuli = 1000.0 ##  700.0 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ######### !!!!!!!! %%%%%%%%%%%%%%%%%%%%%%%
+ms_per_stimuli = 700.0
 simulation_time = ms_per_stimuli * 1 #num_images_to_simulate 
 ms_steady_state_simulation = 0.0
 
-lateral_connections = False # True
+lateral_connections = True
 
 #Size
 num_hipercolumns = 9
@@ -98,8 +98,8 @@ rescale = 1.0 ; radius_lat = 3.5#2.5
 ratio_inh_exc_w = 4.0
 p_center_inh_exc = 1.0 ;        weight_inh_exc = - ratio_inh_exc_w * 0.1
 p_center_inh_inh = 1.0 ;        weight_inh_inh = - ratio_inh_exc_w * 0.1
-p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.3
-p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.3
+p_center_exc_exc = 1.0 ;        weight_exc_exc =  0.5
+p_center_exc_inh = 1.0 ;        weight_exc_inh =  0.5
 
 input_weight_poiss_exc = 1.0     
 input_weight_poiss_inh = 0.7
