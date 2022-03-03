@@ -83,7 +83,7 @@ syn_model_inh = 'static_synapse_hpc'
 syn_model_exc = 'static_synapse_hpc' 
 
 #Delays
-delay_exc = 0.35 ; delay_exc_large = 1.0 ; delay_inh = 0.35
+delay_exc = 0.35 ; delay_exc_large = 1.0 ; delay_inh = 0.7
 slowness_exc = 0.5; slowness_exc_large = 0.5; slowness_inh = 0.5
 
 
@@ -98,8 +98,8 @@ rescale = 1.0 ; radius_lat = 3.5#2.5
 ratio_inh_exc_w = 4.0
 p_center_inh_exc = 0.25 ;        weight_inh_exc = - ratio_inh_exc_w * 0.3
 p_center_inh_inh = 0.25 ;        weight_inh_inh = - ratio_inh_exc_w * 0.3
-p_center_exc_exc = 0.25 ;        weight_exc_exc =  0.8
-p_center_exc_inh = 0.25 ;        weight_exc_inh =  0.7
+p_center_exc_exc = 0.25 ;        weight_exc_exc =  1.25
+p_center_exc_inh = 0.25 ;        weight_exc_inh =  1.0
 
 input_weight_poiss_exc = 1.0     
 input_weight_poiss_inh = 0.25
