@@ -366,7 +366,8 @@ def collect_data(image_selected, exc_eeg, inh_eeg, peaks_exc, freqs_exc, idx_exc
                   'weight_inh_exc': weight_inh_exc,'p_center_inh_inh': p_center_inh_inh,
                   'weight_inh_inh': weight_inh_inh,'p_center_exc_exc': p_center_exc_exc,
                   'weight_exc_exc': weight_exc_exc,
-                  'p_center_exc_inh': p_center_exc_inh,'weight_exc_inh': weight_exc_inh
+                  'p_center_exc_inh': p_center_exc_inh,'weight_exc_inh': weight_exc_inh,
+                  'input_weight_poiss_inh': input_weight_poiss_inh
                   }
     now = datetime.now()
     create_folder(collect_data_folder)
