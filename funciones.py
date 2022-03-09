@@ -333,7 +333,7 @@ def get_frequencies(eeg,orientation_to_read,exc_or_inh, path):
     #plt.close('all')
     
     freqs, density = scipy.signal.periodogram(eeg[eeg_freqs_from:eeg_freqs_until],fs = 1000, scaling = 'density');
-    peaks, values = find_peaks(density, height= 0.4, distance = 10); 
+    peaks, values = find_peaks(density, height= 0.01, distance = 10); 
     idx = (- values['peak_heights']).argsort()[:num_max_frequencies]
     
     for node,peak_value in zip(peaks[idx].tolist(), values['peak_heights'][idx].tolist()):
